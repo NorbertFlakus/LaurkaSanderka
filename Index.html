@@ -1,0 +1,37 @@
+            }
+
+            // Losowe uciekanie
+            const margin = 80;
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - margin) + margin/2;
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - margin) + margin/2;
+            
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+            noBtn.style.margin = '0'; // Usuwa ewentualne przesunięcia
+        };
+
+        noBtn.addEventListener('touchstart', moveAndGrow);
+        noBtn.addEventListener('mouseover', moveAndGrow);
+
+        yesBtn.addEventListener('click', () => {
+            // Zamiana kolorów
+            yesBtn.style.backgroundColor = "#4CAF50";
+            noBtn.style.backgroundColor = "#ff4d4d";
+            document.body.style.backgroundColor = "#fff0f0";
+
+            setTimeout(() => {
+                quiz.style.display = 'none';
+                document.querySelector('.laurka-header').style.display = 'none';
+                final.style.display = 'block';
+                
+                confetti({
+                    particleCount: 150,
+                    spread: 80,
+                    origin: { y: 0.6 },
+                    colors: ['#ff4d4d', '#4CAF50', '#ffffff']
+                });
+            }, 300);
+        });
+    </script>
+</body>
+</html>
