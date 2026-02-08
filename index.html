@@ -110,6 +110,19 @@
         
         <div class="btn-container">
             <button id="yesBtn">TAK!</button>
+            // To wklej wewnątrz funkcji yesBtn.addEventListener('click', () => { ... })
+
+fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        access_key: '9f18eb49-2a5d-4917-ab02-58f62a6b13cb', // <--- TUTAJ WKLEJ SWÓJ KLUCZ
+        subject: 'SANDERKA KLIKNĘŁA TAK! 🔥',
+        from_name: 'Walentynkowy Powiadamiacz',
+        message: 'Właśnie teraz Sanderka zgodziła się zostać Twoją walentynką i zobaczyła kota! Pora szykować deser. 😏'
+    })
+});
+
             <button id="noBtn">NIE</button>
         </div>
     </div>
