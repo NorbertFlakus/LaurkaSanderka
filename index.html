@@ -43,19 +43,9 @@
             margin-bottom: 40px;
         }
 
-        h1 { 
-            font-weight: 300; 
-            font-size: 30px; 
-            margin: 0 0 10px 0; 
-        }
+        h1 { font-weight: 300; font-size: 30px; margin: 0 0 10px 0; }
+        .hint { font-size: 14px; font-style: italic; opacity: 0.6; }
 
-        .hint {
-            font-size: 14px;
-            font-style: italic;
-            opacity: 0.6;
-        }
-
-        /* Kontener na przyciski - początkowo obok siebie */
         .btn-container {
             position: relative;
             width: 100%;
@@ -77,24 +67,15 @@
             z-index: 10;
         }
 
-        #yesBtn {
-            background-color: #ff4d4d; /* Czerwony */
-            color: white;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        #noBtn {
-            background-color: #4CAF50; /* Zielony */
-            color: white;
-            touch-action: none;
-            /* Na początku przycisk jest w normalnym strumieniu (inline-block) */
-            position: relative; 
-        }
+        #yesBtn { background-color: #ff4d4d; color: white; transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        #noBtn { background-color: #4CAF50; color: white; touch-action: none; position: relative; }
 
         #final {
             display: none;
-            padding: 60px 20px;
+            padding: 20px;
             text-align: center;
+            overflow-y: auto;
+            max-height: 100vh;
         }
     </style>
 </head>
@@ -110,25 +91,19 @@
         
         <div class="btn-container">
             <button id="yesBtn">TAK!</button>
-           
-
             <button id="noBtn">NIE</button>
         </div>
     </div>
 
     <div id="final">
-        
         <p style="font-size: 22px;">(Twoja odpowiedź została wysłana)!</p>
-        <div style="font-size: 60px; margin-top: 30px;">❤️🍆🍑🔥</div>
-      <img src="https://img.joemonster.org/upload/qzn/6998954acbd5285d6b00b6ad9f67177343.gif" 
-             alt="pervert cat" 
-             style="width: 80%; max-width: 250px; border-radius: 15px; margin-top: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-        <h1 style="font-size: 40px;">KOCHAM CIĘ MOJA WALENTYNKO!❤️ </h1>
-
-<div style="margin-top: 40px; font-size: 14px; color: #8b837b; font-style: italic; border-top: 1px solid #eee5dd; pt-10px; display: inline-block; padding: 10px 30px;">
-            od: Norbusia dla: Sanderki</div>
-        
-        
+        <div style="font-size: 60px; margin-top: 20px;">❤️🍆🍑🔥</div>
+        <img src="https://img.joemonster.org/upload/qzn/6998954acbd5285d6b00b6ad9f67177343.gif" 
+             style="width: 80%; max-width: 250px; border-radius: 15px; margin-top: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+        <h2 style="font-size: 32px; color: #ff4d4d;">KOCHAM CIĘ MOJA WALENTYNKO! ❤️</h2>
+        <div style="margin-top: 20px; font-size: 14px; color: #8b837b; font-style: italic; border-top: 1px solid #eee5dd; padding: 10px 30px;">
+            od: Norbusia dla: Sanderki
+        </div>
     </div>
 
     <script>
@@ -142,41 +117,39 @@
 
         const moveAndGrow = (e) => {
             if (e) e.preventDefault();
-
-            // Powiększanie TAK
             yesScale += 0.4; 
             yesBtn.style.transform = `scale(${yesScale})`;
-
-            // Przy pierwszym kontakcie zmieniamy pozycjonowanie NIE na absolute
-            if (isFirstMove) {
-                noBtn.style.position = 'fixed';
-                isFirstMove = false;
-            }
-
-            // Losowe uciekanie
+            if (isFirstMove) { noBtn.style.position = 'fixed'; isFirstMove = false; }
             const margin = 80;
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - margin) + margin/2;
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - margin) + margin/2;
-            
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
-            noBtn.style.margin = '0'; // Usuwa ewentualne przesunięcia
+            noBtn.style.margin = '0';
         };
 
         noBtn.addEventListener('touchstart', moveAndGrow);
         noBtn.addEventListener('mouseover', moveAndGrow);
 
         yesBtn.addEventListener('click', () => {
-            // Zamiana kolorów
+            // POWIADOMIENIE - WPISZ TUTAJ SWÓJ KLUCZ
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    access_key: '9f18eb49-2a5d-4917-ab02-58f62a6b13cb', 
+                    subject: 'Sanderka kliknęła TAK! 🔥',
+                    message: 'Szykuj się Norbuś, Sanderka właśnie zaakceptowała walentynkę!'
+                })
+            });
+
             yesBtn.style.backgroundColor = "#4CAF50";
-            noBtn.style.backgroundColor = "#ff4d4d";
             document.body.style.backgroundColor = "#fff0f0";
 
             setTimeout(() => {
                 quiz.style.display = 'none';
                 document.querySelector('.laurka-header').style.display = 'none';
                 final.style.display = 'block';
-                
                 confetti({
                     particleCount: 150,
                     spread: 80,
