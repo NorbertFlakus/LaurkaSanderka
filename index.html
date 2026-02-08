@@ -1,3 +1,150 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dla Sanderki ❤️</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            background-color: #fdfaf7;
+            font-family: -apple-system, system-ui, sans-serif;
+            color: #5d5752;
+            overflow: hidden;
+            transition: background-color 0.5s ease;
+        }
+
+        .laurka-header {
+            width: 100%;
+            padding: 25px 10px;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            background-color: #f5f0eb;
+            border-bottom: 2px solid #eee5dd;
+            margin-bottom: 60px;
+            text-align: center;
+            font-weight: 600;
+            color: #8b837b;
+        }
+
+        .content {
+            padding: 0 20px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 { 
+            font-weight: 300; 
+            font-size: 30px; 
+            margin: 0 0 10px 0; 
+        }
+
+        .hint {
+            font-size: 14px;
+            font-style: italic;
+            opacity: 0.6;
+        }
+
+        /* Kontener na przyciski - początkowo obok siebie */
+        .btn-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        button {
+            padding: 16px 35px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        #yesBtn {
+            background-color: #ff4d4d; /* Czerwony */
+            color: white;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #noBtn {
+            background-color: #4CAF50; /* Zielony */
+            color: white;
+            touch-action: none;
+            /* Na początku przycisk jest w normalnym strumieniu (inline-block) */
+            position: relative; 
+        }
+
+        #final {
+            display: none;
+            padding: 60px 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="laurka-header">Dla mojej Sanderki laurka</div>
+
+    <div id="quiz">
+        <div class="content">
+            <h1>Sanderko, zostaniesz moją Walentynką?</h1>
+            <span class="hint">(tylko nie klikaj nie)</span>
+        </div>
+        
+        <div class="btn-container">
+            <button id="yesBtn">TAK!</button>
+            <button id="noBtn">NIE</button>
+        </div>
+    </div>
+
+    <div id="final">
+        <h1 style="font-size: 40px;">WIEDZIAŁEM! </h1>
+        <p style="font-size: 22px;">(Twoja odpowiedź została wysłana)!</p>
+        <div style="font-size: 60px; margin-top: 30px;">❤️🍆🍑🔥</div>
+      <img src="https://img.joemonster.org/upload/qzn/6998954acbd5285d6b00b6ad9f67177343.gif" 
+             alt="pervert cat" 
+             style="width: 80%; max-width: 250px; border-radius: 15px; margin-top: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+        
+       
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const quiz = document.getElementById('quiz');
+        const final = document.getElementById('final');
+        
+        let yesScale = 1;
+        let isFirstMove = true;
+
+        const moveAndGrow = (e) => {
+            if (e) e.preventDefault();
+
+            // Powiększanie TAK
+            yesScale += 0.4; 
+            yesBtn.style.transform = `scale(${yesScale})`;
+
+            // Przy pierwszym kontakcie zmieniamy pozycjonowanie NIE na absolute
+            if (isFirstMove) {
+                noBtn.style.position = 'fixed';
+                isFirstMove = false;
             }
 
             // Losowe uciekanie
